@@ -359,7 +359,7 @@ const AddTaskForm = ({
       setSelectedProject(null); // Reset selected project
       setPoints(""); // Reset points
     } catch (error) {
-      setToast({ message: error.message || "Failed to add task", type: "error" });
+      setToast({ message: (error as any).message || "Failed to add task", type: "error" });
     }
   };
 

@@ -78,11 +78,11 @@ const LeaderboardPage = () => {
 
     for (const [repo, group] of Object.entries(data)) {
       // Initialize group details
-      const curBro = {
+      const curBro: any  = {
         rank: i,
         projectName: repo,
         contributors: [],
-        progress: group.contextBuffer || "",
+        progress: (group as any).contextBuffer || "",
         contributionData: [],
         lastActive: "2025-01-24", // Default, update dynamically if needed
         tasks: [],
@@ -91,26 +91,26 @@ const LeaderboardPage = () => {
       i++;
 
       // Populate contributors
-      for (const [member, details] of Object.entries(group.members)) {
+      for (const [member, details] of Object.entries((group as any).members)) {
         curBro.contributors.push({
-          name: details.name,
-          loc: details.LOC,
-          contri: details.summary,
-          rollNo: details.roll,
-          lastActive: details.lastActive,
+          name: (details as any).name,
+          loc: (details as any).LOC,
+          contri: (details as any).summary,
+          rollNo: (details as any).roll,
+          lastActive: (details as any).lastActive,
         });
-        curBro.contributionData.push(details.LOC);
+        curBro.contributionData.push((details as any).LOC);
       }
 
       // Handle tasks for this specific repo
-      const uniqueTasks = [];
+      const uniqueTasks:any = [];
       let totalPoints = 0;
 
-      if (group.tasks) {
-        group.tasks.forEach((task) => {
+      if ((group as any).tasks) {
+        (group as any).tasks.forEach((task:any) => {
           // Check if task is already in uniqueTasks
           const isDuplicate = uniqueTasks.some(
-            (t) => t.task === task.task && t.createdAt === task.createdAt
+            (t:any) => t.task === task.task && t.createdAt === task.createdAt
           );
 
           if (!isDuplicate) {
@@ -138,7 +138,7 @@ const LeaderboardPage = () => {
 
     // Set the leaderboard data and the 2D tasks state
     setLeaderboardData(curData);
-    setRepoTasks(tasksByRepo);
+    setRepoTasks(tasksByRepo as any);
   }, [data]);
 
   const [leaderboardData, setLeaderboardData] = useState([
@@ -186,7 +186,7 @@ const LeaderboardPage = () => {
     setShowProgressModal(true);
   };
 
-  function getRepoName(url) {
+  function getRepoName(url:any) {
     // Remove trailing slash if it exists
     if (url.endsWith('/')) {
       url = url.slice(0, -1);
@@ -197,9 +197,9 @@ const LeaderboardPage = () => {
 
   const handleprojectinfo = async (repourl: string) => {
     console.log(repourl);
-    setInfo(repourl);
+    setInfo(repourl as any);
   }
-  const handleGetInfoClick = (project) => {
+  const handleGetInfoClick = (project:any) => {
     console.log(project);
     setSelectedContributors(project.contributors);
   };
@@ -442,7 +442,7 @@ const LeaderboardPage = () => {
               <strong>Roll No:</strong> {contributor.rollNo}
             </p>
             <p className="text-sm text-gray-400 mt-2">
-              <strong>Last Active:</strong> {contributor.lastActive || "N/A"}
+              <strong>Last Active:</strong> {(contributor as any).lastActive || "N/A"}
             </p>
             <div className="text-sm text-gray-300 mt-3 h-[120px] overflow-auto leading-relaxed">
               <strong>Contribution:</strong>{" "}
@@ -475,13 +475,13 @@ const LeaderboardPage = () => {
     <div className="bg-[#1A1A1D] rounded-lg shadow-lg p-6 w-full max-w-4xl border border-gray-700">
       <div className="text-center mb-4">
         <h2 className="text-2xl font-semibold text-gray-100 flex items-center justify-center gap-2">
-          {`Project Name: ${showInfo.split('/')[4]}`}
+          {`Project Name: ${(showInfo as any).split('/')[4]}`}
           <FaGithub className="text-gray-300" />
         </h2>
       </div>
       <div className="bg-[#222] p-4 rounded-lg mb-6 border border-gray-600">
         <p className="text-sm text-gray-300 leading-relaxed">
-          {`This project aims to provide an innovative solution for tracking tasks and progress in the repository: ${showInfo.split('/')[4]}`}
+          {`This project aims to provide an innovative solution for tracking tasks and progress in the repository: ${(showInfo as any).split('/')[4]}`}
         </p>
       </div>
       <div className="overflow-auto">
@@ -496,8 +496,8 @@ const LeaderboardPage = () => {
           </thead>
           <tbody>
             {repoTasks
-              .filter((repo) => repo.repoUrl === showInfo)
-              .flatMap((repo) => repo.tasks)
+              .filter((repo) => (repo as any).repoUrl === showInfo)
+              .flatMap((repo) => (repo as any).tasks)
               .map((task, index) => (
                 <tr key={index} className="border-b border-gray-600">
                   <td className="px-4 py-2 text-gray-200">{task.task}</td>
