@@ -23,9 +23,7 @@ const LeaderboardPage = () => {
     { name: string; rollNo: string; contri: string }[] | null
   >(null);
   const [searchQuery, setSearchQuery] = useState(""); // Search query state
-  const [currentPage, setCurrentPage] = useState(1); // Pagination state
-  const rowsPerPage = 5; // Rows per page
-
+  
 
   const [data, setData] = useState([]);
   const [repoTasks, setRepoTasks] = useState([]);
@@ -159,11 +157,7 @@ const LeaderboardPage = () => {
 
 
   const totalRows = leaderboardData.length;
-  const totalPages = Math.ceil(totalRows / rowsPerPage);
-  const paginatedData = leaderboardData.slice(
-    (currentPage - 1) * rowsPerPage,
-    currentPage * rowsPerPage
-  );
+ 
 
   const filteredData = leaderboardData.filter((project) => {
     if (project.projectName.toLowerCase().includes(searchQuery.toLowerCase())) {
@@ -367,7 +361,7 @@ const LeaderboardPage = () => {
       </div>
 
       {/* Pagination */}
-      <div className="flex justify-center items-center space-x-4 mt-6">
+      {/* <div className="flex justify-center items-center space-x-4 mt-6">
         <button
           disabled={currentPage === 1}
           onClick={() => setCurrentPage(currentPage - 1)}
@@ -387,7 +381,7 @@ const LeaderboardPage = () => {
         >
           <ChevronRight className="inline w-5 h-5" />
         </button>
-      </div>
+      </div> */}
 
       {/* Modal for Progress Details */}
 {showProgressModal && (
