@@ -56,7 +56,7 @@ const LeaderboardPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch('https://tbppp.centralindia.cloudapp.azure.com/dataa');
+        const res = await fetch('https://leetcode.centralindia.cloudapp.azure.com/dataAI');
         const data = await res.json();
         setData(data);
       } catch (error) {
