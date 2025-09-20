@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { motion, progress } from "framer-motion";
 import { Pie } from "react-chartjs-2";
+import fallbackData from './fallbackData.json';
 import {
   Chart as ChartJS,
   ArcElement,
@@ -57,7 +58,10 @@ const LeaderboardPage = () => {
     const fetchData = async () => {
       try {
         const res = await fetch('https://leetcode.centralindia.cloudapp.azure.com/dataAI');
-        const data = await res.json();
+        let data = await res.json();
+        if(!data){
+          data = fallbackData;
+        }
         setData(data);
       } catch (error) {
         console.error('Error fetching data:', error);
